@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  web:
+    image: yourprojectname
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    environment:
+      - ConnectionStrings__TestConnectionString=Server=DESKTOP-FI240MH\SQLEXPRESS;Database=Practice;User Id=sa;Password=P@ssw0rd;
+
+  db:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      SA_PASSWORD: "P@ssw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+    - sqlserverdata:/var/opt/mssql
+
+volumes:
+  sqlserverdata:
